@@ -13,8 +13,11 @@
     <title>HelloWorld</title>
   </head>
   <body>
-    <p>Hello World 1</p>
-    <p>Hello World 2</p>
+    <div id="app">
+      <p>Hello World 1</p>
+      <p>Hello World 2</p>
+    </div>
+    <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
 ```
@@ -27,51 +30,30 @@
 
 对于上面输出的内容，如果想用 JavaScript 来更改这两行文字，怎么办呢？我们会添加代码变为：
 
-```html
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>HelloWorld</title>
-  </head>
-  <body>
-    <p>Hello World 1</p>
-    <p>Hello World 2</p>
-    <script>
-      var paragraphs = document.getElementsByTagName('p')
-      for (var i = 0; i < paragraphs.length; i++) {
-        var paragraph = paragraphs.item(i)
-        paragraph.innerHTML = 'I like dog.'
-      }
-    </script>
-  </body>
-</html>
+```ts
+// src/main.ts
+Array.from(document.querySelectorAll('p')).forEach(
+  (el) => (el.innerText = 'I like dog.'),
+)
 ```
 
 结果变为：
 
 ![用 JavaScript 更改段落元素](./images/hello-2.png)
 
-可以看到，使用 JavaScript，我们添加了 4 行代码。
+可以看到，使用 JavaScript，我们添加了 3 行代码。
+
+> 由于 js 的发展，现在原生 js 与 jq 之类的 dom 辅助库并没有太大的差异了
 
 ## 用 D3 来更改 HelloWorld
 
-如果使用 D3.js 来修改这两行呢？只需添加一行代码即可。注意不要忘了引用 D3.js 源文件。
+如果使用 D3.js 来修改这两行呢？只需添加一行代码即可。
 
-```html
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>HelloWorld</title>
-  </head>
-  <body>
-    <p>Hello World 1</p>
-    <p>Hello World 2</p>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script>
-      d3.select('body').selectAll('p').text('www.ourd3js.com')
-    </script>
-  </body>
-</html>
+```ts
+// src/main.ts
+import { selectAll } from 'd3'
+
+selectAll('p').text('I like dog.')
 ```
 
 结果会变为：
@@ -82,22 +64,24 @@
 
 接下来改变字体的颜色和大小，稍微修改上述代码：
 
-```javascript
+```ts
+import { selectAll } from 'd3'
+
 //选择<body>中所有的<p>，其文本内容为 www.ourd3js.com，选择集保存在变量 p 中
-var p = d3.select('body').selectAll('p').text('www.ourd3js.com')
+const $p = selectAll('p').text('I like dog.')
 
 //修改段落的颜色和字体大小
-p.style('color', 'red').style('font-size', '72px')
+$p.style('color', 'red').style('font-size', '72px')
 ```
 
 上面的代码是先将选中的元素赋值给变量 p，然后通过变量 p 来改变样式，这样可以使代码更整洁。
 
 这里涉及一个概念：**选择集**
 
-使用 d3.select() 或 d3.selectAll() 选择元素后返回的对象，就是**选择集**。
+使用 `select()` 或 `selectAll()` 选择元素后返回的对象，就是**选择集**。
 
 另外，有人会发现，D3 能够连续不断地调用函数，形如：
 
-d3.select().selectAll().text()
+`select().selectAll().text()`
 
 这称为**链式语法**，和 JQuery 的语法很像，常用 JQuery 的朋友一定会感到很亲切。
