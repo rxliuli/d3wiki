@@ -8,20 +8,20 @@
 
 在 SVG 画布的预定义元素里，有六种基本图形：
 
-- 矩形 **<rect>**
-- 圆形 **<circle>**
-- 椭圆 **<ellipse>**
-- 线段 **<line>**
-- 折线 **<polyline>**
-- 多边形 **<polygon>**
+- 矩形 `<rect>`
+- 圆形 `<circle>`
+- 椭圆 `<ellipse>`
+- 线段 `<line>`
+- 折线 `<polyline>`
+- 多边形 `<polygon>`
 
 另外，还有一种比较特殊，也是功能最强的元素：
 
-- 路径 **<path>**
+- 路径 `<path>`
 
 画布中的所有图形，都是由以上七种元素组成。
 
-显然，这里面没有**坐标轴 <axis> **这种元素。如果有的话，我们可以采用类似以下的方式定义：
+显然，这里面没有坐标轴 `<axis>`这种元素。如果有的话，我们可以采用类似以下的方式定义：
 
 ```javascript
 <axis x1="" x2="" ...></axis>
@@ -42,14 +42,14 @@
 <g>
 <line></line>   <!-- 第二个刻度的直线 -->
 <text></text>   <!-- 第二个刻度的文字 -->
-</g> 
+</g>
 ...
 <!-- 坐标轴的轴线 -->
 <path></path>
 </g>
 ```
 
-分组元素 <g>，是 SVG 画布中的元素，意思是 group。此元素是将其他元素进行组合的容器，在这里是用于将坐标轴的其他元素分组存放。
+分组元素 `<g>`，是 SVG 画布中的元素，意思是 group。此元素是将其他元素进行组合的容器，在这里是用于将坐标轴的其他元素分组存放。
 
 如果需要手动添加这些元素就太麻烦了，为此，D3 提供了一个组件：d3.svg.axis()。它为我们完成了以上工作。
 
@@ -59,16 +59,18 @@
 
 ```javascript
 //数据
-var dataset = [ 2.5 , 2.1 , 1.7 , 1.3 , 0.9 ];
+var dataset = [2.5, 2.1, 1.7, 1.3, 0.9]
 //定义比例尺
-var linear = d3.scale.linear()
-      .domain([0, d3.max(dataset)])
-      .range([0, 250]);
+var linear = d3.scale
+  .linear()
+  .domain([0, d3.max(dataset)])
+  .range([0, 250])
 
-var axis = d3.svg.axis()
-     .scale(linear)      //指定比例尺
-     .orient("bottom")   //指定刻度的方向
-     .ticks(7);          //指定刻度的数量
+var axis = d3.svg
+  .axis()
+  .scale(linear) //指定比例尺
+  .orient('bottom') //指定刻度的方向
+  .ticks(7) //指定刻度的数量
 ```
 
 第 1 – 2 行：定义数组。
@@ -82,45 +84,41 @@ var axis = d3.svg.axis()
 - orient()：指定刻度的朝向，bottom 表示在坐标轴的下方显示。
 - ticks()：指定刻度的数量。
 
-
 ## 在 SVG 中添加坐标轴
 
-定义了坐标轴之后，只需要在 SVG 中添加一个分组元素 <g>，再将坐标轴的其他元素添加到这个 <g> 里即可。代码如下：
+定义了坐标轴之后，只需要在 SVG 中添加一个分组元素 `<g>`，再将坐标轴的其他元素添加到这个 `<g>` 里即可。代码如下：
 
 ```javascript
-svg.append("g")
-   .call(axis);
+svg.append('g').call(axis)
 ```
 
-上面有一个 **call()** 函数，其参数是前面定义的坐标轴 axis。
+上面有一个 `call()` 函数，其参数是前面定义的坐标轴 axis。
 
 在 D3 中，call() 的参数是一个函数。调用之后，将当前的选择集作为参数传递给此函数。也就是说，以下两段代码是相等的。
 
 ```javascript
 function foo(selection) {
-  selection
-      .attr("name1", "value1")
-      .attr("name2", "value2");
+  selection.attr('name1', 'value1').attr('name2', 'value2')
 }
-foo(d3.selectAll("div"))
+foo(d3.selectAll('div'))
 ```
 
 和
 
 ```javascript
-d3.selectAll("div").call(foo);
+d3.selectAll('div').call(foo)
 ```
 
 因此，
 
 ```javascript
-svg.append("g").call(axis);
+svg.append('g').call(axis)
 ```
 
 与
 
 ```javascript
-axis(svg.append(g));
+axis(svg.append(g))
 ```
 
 ## 设定坐标轴的样式和位置
@@ -150,10 +148,11 @@ axis(svg.append(g));
 通常在添加元素的时候就一并设定，写成如下形式：
 
 ```javascript
-svg.append("g")
-  .attr("class","axis")
-  .attr("transform","translate(20,130)")
-  .call(axis);
+svg
+  .append('g')
+  .attr('class', 'axis')
+  .attr('transform', 'translate(20,130)')
+  .call(axis)
 ```
 
 ## 源代码

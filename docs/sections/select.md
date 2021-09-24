@@ -23,8 +23,8 @@
 使用 select ，参数传入 p 即可，如此返回的是第一个 p 元素。
 
 ```javascript
-t("p");
-p1.style("color","red");
+t('p')
+p1.style('color', 'red')
 ```
 
 结果如下图，被选择的元素标记为红色。
@@ -36,8 +36,8 @@ p1.style("color","red");
 使用 selectAll 选择 body 中所有的 p 元素。
 
 ```javascript
-var p = body.selectAll("p");
-p.style("color","red");
+var p = body.selectAll('p')
+p.style('color', 'red')
 ```
 
 结果如下：
@@ -53,8 +53,8 @@ p.style("color","red");
 然后，使用 select 选择元素，注意参数中 id 名称前要加 # 号。
 
 ```javascript
-var p2 = body.select("#myid");
-p2.style("color","red");
+var p2 = body.select('#myid')
+p2.style('color', 'red')
 ```
 
 结果如下：
@@ -73,8 +73,8 @@ p2.style("color","red");
 由于需要选择多个元素，要用 selectAll。注意参数，class 名称前要加一个点。
 
 ```javascript
-var p = body.selectAll(".myclass");
-p.style("color","red");
+var p = body.selectAll('.myclass')
+p.style('color', 'red')
 ```
 
 结果如下：
@@ -97,8 +97,7 @@ p.style("color","red");
 ### append()
 
 ```javascript
-body.append("p")
-    .text("append p element");
+body.append('p').text('append p element')
 ```
 
 在 body 的末尾添加一个 p 元素，结果为：
@@ -115,8 +114,7 @@ append p element
 在 body 中 id 为 myid 的元素前添加一个段落元素。
 
 ```javascript
-body.insert("p","#myid")
-  .text("insert p element");
+body.insert('p', '#myid').text('insert p element')
 ```
 
 已经指定了 Pear 段落的 id 为 myid，因此结果如下。
@@ -133,8 +131,8 @@ Banana
 删除一个元素时，对于选择的元素，使用 remove 即可，例如：
 
 ```javascript
-var p = body.select("#myid");
-p.remove();
+var p = body.select('#myid')
+p.remove()
 ```
 
 如此即可删除指定 id 的段落元素。

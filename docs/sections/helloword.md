@@ -7,15 +7,15 @@
 都知道 HTML 吧，如果不知道请下百度一下吧。在 HTML 中输出 HelloWorld 是怎样的呢，先看下面的代码。
 
 ```html
-<html> 
-  <head> 
-        <meta charset="utf-8"> 
-        <title>HelloWorld</title> 
-  </head> 
-    <body> 
-        <p>Hello World 1</p>
-        <p>Hello World 2</p>
-    </body> 
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HelloWorld</title>
+  </head>
+  <body>
+    <p>Hello World 1</p>
+    <p>Hello World 2</p>
+  </body>
 </html>
 ```
 
@@ -28,22 +28,22 @@
 对于上面输出的内容，如果想用 JavaScript 来更改这两行文字，怎么办呢？我们会添加代码变为：
 
 ```html
-<html> 
-  <head> 
-        <meta charset="utf-8"> 
-        <title>HelloWorld</title> 
-  </head> 
-    <body> 
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HelloWorld</title>
+  </head>
+  <body>
     <p>Hello World 1</p>
     <p>Hello World 2</p>
-        <script>
-        var paragraphs = document.getElementsByTagName("p");
-        for (var i = 0; i < paragraphs.length; i++) {
-          var paragraph = paragraphs.item(i);
-          paragraph.innerHTML = "I like dog.";
-        }          
-        </script> 
-    </body> 
+    <script>
+      var paragraphs = document.getElementsByTagName('p')
+      for (var i = 0; i < paragraphs.length; i++) {
+        var paragraph = paragraphs.item(i)
+        paragraph.innerHTML = 'I like dog.'
+      }
+    </script>
+  </body>
 </html>
 ```
 
@@ -51,26 +51,26 @@
 
 ![用 JavaScript 更改段落元素](./images/hello-2.png)
 
-可以看到，使用 JavaScript，我们添加了4行代码。
+可以看到，使用 JavaScript，我们添加了 4 行代码。
 
 ## 用 D3 来更改 HelloWorld
 
 如果使用 D3.js 来修改这两行呢？只需添加一行代码即可。注意不要忘了引用 D3.js 源文件。
 
 ```html
-<html> 
-  <head> 
-        <meta charset="utf-8"> 
-        <title>HelloWorld</title> 
-  </head> 
-    <body> 
-        <p>Hello World 1</p>
-        <p>Hello World 2</p>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> 
-        <script>  
-        d3.select("body").selectAll("p").text("www.ourd3js.com");      
-        </script> 
-    </body> 
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HelloWorld</title>
+  </head>
+  <body>
+    <p>Hello World 1</p>
+    <p>Hello World 2</p>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+      d3.select('body').selectAll('p').text('www.ourd3js.com')
+    </script>
+  </body>
 </html>
 ```
 
@@ -84,13 +84,10 @@
 
 ```javascript
 //选择<body>中所有的<p>，其文本内容为 www.ourd3js.com，选择集保存在变量 p 中
-var p = d3.select("body")
-          .selectAll("p")
-          .text("www.ourd3js.com");
+var p = d3.select('body').selectAll('p').text('www.ourd3js.com')
 
 //修改段落的颜色和字体大小
-p.style("color","red")
- .style("font-size","72px");
+p.style('color', 'red').style('font-size', '72px')
 ```
 
 上面的代码是先将选中的元素赋值给变量 p，然后通过变量 p 来改变样式，这样可以使代码更整洁。

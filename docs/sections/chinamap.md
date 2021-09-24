@@ -2,7 +2,7 @@
 
 本章以中国地图为例，介绍地图的制作方法。
 
-在数据可视化中，地图是很重要的一部分。很多情况会与地图有关联，如中国各省的人口多少，GDP多少等，都可以和地图联系在一起。
+在数据可视化中，地图是很重要的一部分。很多情况会与地图有关联，如中国各省的人口多少，GDP 多少等，都可以和地图联系在一起。
 
 ## 地图数据的获取
 
@@ -29,10 +29,11 @@
 ## 投影函数
 
 ```javascript
-var projection = d3.geo.mercator()
-    .center([107, 31])
-    .scale(850)
-    .translate([width/2, height/2]);
+var projection = d3.geo
+  .mercator()
+  .center([107, 31])
+  .scale(850)
+  .translate([width / 2, height / 2])
 ```
 
 由于 GeoJSON 文件中的地图数据，都是经度和纬度的信息。它们都是三维的，而要在网页上显示的是二维的，所以要设定一个投影函数来转换经度纬度。如上所示，使用 d3.geo.mercator() 的投影方式。各种投影的函数，可以参考： [https://github.com/mbostock/d3/wiki/Geo-Projections](https://github.com/mbostock/d3/wiki/Geo-Projections)
@@ -48,8 +49,7 @@ var projection = d3.geo.mercator()
 为了根据地图的地理数据生成 SVG 中 path 元素的路径值，需要用到 d3.geo.path()，我称它为地理路径生成器。
 
 ```javascript
-var path = d3.geo.path()
-    .projection(projection);
+var path = d3.geo.path().projection(projection)
 ```
 
 projection() 是设定生成器的投影函数，把上面定义的投影传入即可。以后，当使用此生成器计算路径时，会自己加入投影的影响。
@@ -57,31 +57,28 @@ projection() 是设定生成器的投影函数，把上面定义的投影传入�
 ## 向服务器请求文件并绘制地图
 
 ```javascript
-d3.json("china.json", function(error, root) {
-        
-    if (error) 
-        return console.error(error);
-    console.log(root.features);
-        
-    svg.selectAll("path")
-        .data( root.features )
-        .enter()
-        .append("path")
-        .attr("stroke","#000")
-        .attr("stroke-width",1)
-        .attr("fill", function(d,i){
-            return color(i);
-        })
-        .attr("d", path )   //使用地理路径生成器
-        .on("mouseover",function(d,i){
-                    d3.select(this)
-                       .attr("fill","yellow");
-                })
-                .on("mouseout",function(d,i){
-                    d3.select(this)
-                       .attr("fill",color(i));
-                });
-});
+d3.json('china.json', function (error, root) {
+  if (error) return console.error(error)
+  console.log(root.features)
+
+  svg
+    .selectAll('path')
+    .data(root.features)
+    .enter()
+    .append('path')
+    .attr('stroke', '#000')
+    .attr('stroke-width', 1)
+    .attr('fill', function (d, i) {
+      return color(i)
+    })
+    .attr('d', path) //使用地理路径生成器
+    .on('mouseover', function (d, i) {
+      d3.select(this).attr('fill', 'yellow')
+    })
+    .on('mouseout', function (d, i) {
+      d3.select(this).attr('fill', color(i))
+    })
+})
 ```
 
 再次声明：d3.json() 不能直接读取本地文件，因此你需要搭建一个服务器，例如 Apache。

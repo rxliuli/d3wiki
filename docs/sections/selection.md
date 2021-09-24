@@ -16,11 +16,11 @@
 例如，选择集的常见用法如下。
 
 ```javascript
-var body = d3.select("body"); //选择文档中的body元素
-var p1 = body.select("p");      //选择body中的第一个p元素
-var p = body.selectAll("p");    //选择body中的所有p元素
-var svg = body.select("svg");   //选择body中的svg元素
-var rects = svg.selectAll("rect");  //选择svg中所有的svg元素
+var body = d3.select('body') //选择文档中的body元素
+var p1 = body.select('p') //选择body中的第一个p元素
+var p = body.selectAll('p') //选择body中的所有p元素
+var svg = body.select('svg') //选择body中的svg元素
+var rects = svg.selectAll('rect') //选择svg中所有的svg元素
 ```
 
 选择集和绑定数据通常是一起使用的。
@@ -49,16 +49,16 @@ D3 中是通过以下两个函数来绑定数据的：
 假设有一字符串 China，要将此字符串分别与三个段落元素绑定，代码如下：
 
 ```javascript
-var str = "China";
+var str = 'China'
 
-var body = d3.select("body");
-var p = body.selectAll("p");
+var body = d3.select('body')
+var p = body.selectAll('p')
 
-p.datum(str);
+p.datum(str)
 
-p.text(function(d, i){
-    return "第 "+ i + " 个元素绑定的数据是 " + d;
-});
+p.text(function (d, i) {
+  return '第 ' + i + ' 个元素绑定的数据是 ' + d
+})
 ```
 
 绑定数据后，使用此数据来修改三个段落元素的内容，其结果如下：
@@ -83,7 +83,7 @@ p.text(function(d, i){
 有一个数组，接下来要分别将数组的各元素绑定到三个段落元素上。
 
 ```javascript
-var dataset = ["I like dog","I like cat","I like snake"];
+var dataset = ['I like dog', 'I like cat', 'I like snake']
 ```
 
 绑定之后，其对应关系的要求为：
@@ -95,13 +95,12 @@ var dataset = ["I like dog","I like cat","I like snake"];
 调用 data() 绑定数据，并替换三个段落元素的字符串为被绑定的字符串，代码如下：
 
 ```javascript
-var body = d3.select("body");
-var p = body.selectAll("p");
+var body = d3.select('body')
+var p = body.selectAll('p')
 
-p.data(dataset)
-  .text(function(d, i){
-      return d;
-  });
+p.data(dataset).text(function (d, i) {
+  return d
+})
 ```
 
 这段代码也用到了一个无名函数 function(d, i)，其对应的情况如下：

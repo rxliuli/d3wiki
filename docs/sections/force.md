@@ -11,14 +11,24 @@
 初始数据如下：
 
 ```javascript
-var nodes = [ { name: "桂林" }, { name: "广州" },
-              { name: "厦门" }, { name: "杭州" },
-              { name: "上海" }, { name: "青岛" },
-              { name: "天津" } ];
- 
- var edges = [ { source : 0 , target: 1 } , { source : 0 , target: 2 } ,
-               { source : 0 , target: 3 } , { source : 1 , target: 4 } ,
-               { source : 1 , target: 5 } , { source : 1 , target: 6 } ];
+var nodes = [
+  { name: '桂林' },
+  { name: '广州' },
+  { name: '厦门' },
+  { name: '杭州' },
+  { name: '上海' },
+  { name: '青岛' },
+  { name: '天津' },
+]
+
+var edges = [
+  { source: 0, target: 1 },
+  { source: 0, target: 2 },
+  { source: 0, target: 3 },
+  { source: 1, target: 4 },
+  { source: 1, target: 5 },
+  { source: 1, target: 6 },
+]
 ```
 
 节点（nodes）和连线（edges）的数组，节点是一些城市名，连线的两端是节点的序号（序号从 0 开始）。
@@ -30,25 +40,26 @@ var nodes = [ { name: "桂林" }, { name: "广州" },
 定义一个力导向图的布局如下。
 
 ```javascript
-var force = d3.layout.force()
-      .nodes(nodes) //指定节点数组
-      .links(edges) //指定连线数组
-      .size([width,height]) //指定作用域范围
-      .linkDistance(150) //指定连线长度
-      .charge([-400]); //相互之间的作用力
+var force = d3.layout
+  .force()
+  .nodes(nodes) //指定节点数组
+  .links(edges) //指定连线数组
+  .size([width, height]) //指定作用域范围
+  .linkDistance(150) //指定连线长度
+  .charge([-400]) //相互之间的作用力
 ```
 
 然后，使力学作用生效：
 
 ```javascript
-force.start();    //开始作用
+force.start() //开始作用
 ```
 
 如此，数组 nodes 和 edges 的数据都发生了变化。在控制台输出一下，看看发生了什么变化。
 
 ```javascript
-console.log(nodes);
-console.log(edges);
+console.log(nodes)
+console.log(edges)
 ```
 
 节点转换前后如下图。
@@ -79,38 +90,41 @@ console.log(edges);
 代码如下：
 
 ```javascript
-//添加连线 
- var svg_edges = svg.selectAll("line")
-     .data(edges)
-     .enter()
-     .append("line")
-     .style("stroke","#ccc")
-     .style("stroke-width",1);
- 
- var color = d3.scale.category20();
- 
- //添加节点 
- var svg_nodes = svg.selectAll("circle")
-     .data(nodes)
-     .enter()
-     .append("circle")
-     .attr("r",20)
-     .style("fill",function(d,i){
-         return color(i);
-     })
-     .call(force.drag);  //使得节点能够拖动
+//添加连线
+var svg_edges = svg
+  .selectAll('line')
+  .data(edges)
+  .enter()
+  .append('line')
+  .style('stroke', '#ccc')
+  .style('stroke-width', 1)
 
- //添加描述节点的文字
- var svg_texts = svg.selectAll("text")
-     .data(nodes)
-     .enter()
-     .append("text")
-     .style("fill", "black")
-     .attr("dx", 20)
-     .attr("dy", 8)
-     .text(function(d){
-        return d.name;
-     });
+var color = d3.scale.category20()
+
+//添加节点
+var svg_nodes = svg
+  .selectAll('circle')
+  .data(nodes)
+  .enter()
+  .append('circle')
+  .attr('r', 20)
+  .style('fill', function (d, i) {
+    return color(i)
+  })
+  .call(force.drag) //使得节点能够拖动
+
+//添加描述节点的文字
+var svg_texts = svg
+  .selectAll('text')
+  .data(nodes)
+  .enter()
+  .append('text')
+  .style('fill', 'black')
+  .attr('dx', 20)
+  .attr('dy', 8)
+  .text(function (d) {
+    return d.name
+  })
 ```
 
 调用 call( force.drag ) 后节点可被拖动。force.drag() 是一个函数，将其作为 call() 的参数，相当于将当前选择的元素传到 force.drag() 函数中。
@@ -120,21 +134,41 @@ console.log(edges);
 力导向图布局 force 有一个事件 tick，每进行到一个时刻，都要调用它，更新的内容就写在它的监听器里就好。
 
 ```javascript
-force.on("tick", function(){ //对于每一个时间间隔
-    //更新连线坐标
-    svg_edges.attr("x1",function(d){ return d.source.x; })
-        .attr("y1",function(d){ return d.source.y; })
-        .attr("x2",function(d){ return d.target.x; })
-        .attr("y2",function(d){ return d.target.y; });
- 
-    //更新节点坐标
-    svg_nodes.attr("cx",function(d){ return d.x; })
-        .attr("cy",function(d){ return d.y; });
+force.on('tick', function () {
+  //对于每一个时间间隔
+  //更新连线坐标
+  svg_edges
+    .attr('x1', function (d) {
+      return d.source.x
+    })
+    .attr('y1', function (d) {
+      return d.source.y
+    })
+    .attr('x2', function (d) {
+      return d.target.x
+    })
+    .attr('y2', function (d) {
+      return d.target.y
+    })
 
-    //更新文字坐标
-    svg_texts.attr("x", function(d){ return d.x; })
-       .attr("y", function(d){ return d.y; });
- });
+  //更新节点坐标
+  svg_nodes
+    .attr('cx', function (d) {
+      return d.x
+    })
+    .attr('cy', function (d) {
+      return d.y
+    })
+
+  //更新文字坐标
+  svg_texts
+    .attr('x', function (d) {
+      return d.x
+    })
+    .attr('y', function (d) {
+      return d.y
+    })
+})
 ```
 
 tick 的英文意思是钟表发出的嘀嗒嘀嗒声，想到这个大家应该很清楚了吧。每次触发时，都会调用后面的无名函数 function。
@@ -142,7 +176,6 @@ tick 的英文意思是钟表发出的嘀嗒嘀嗒声，想到这个大家应该
 结果如图：
 
 ![结果](./images/force-4.png)
-
 
 ## 源代码
 

@@ -9,10 +9,11 @@ Update、Enter、Exit 是 D3 中三个非常重要的概念，它处理的是当
 前几章里，反复出现了形如以下的代码。
 
 ```javascript
-svg.selectAll("rect")   //选择svg内所有的矩形
-    .data(dataset)      //绑定数组
-    .enter()            //指定选择集的enter部分
-    .append("rect")     //添加足够数量的矩形元素
+svg
+  .selectAll('rect') //选择svg内所有的矩形
+  .data(dataset) //绑定数组
+  .enter() //指定选择集的enter部分
+  .append('rect') //添加足够数量的矩形元素
 ```
 
 前面提到，这段代码使用的情况是当以下情况出现的时候：
@@ -38,27 +39,26 @@ svg.selectAll("rect")   //选择svg内所有的矩形
 现在 body 中有三个 p 元素，要绑定一个长度大于 3 的数组到 p 的选择集上，然后分别处理 update 和 enter 两部分。
 
 ```javascript
-var dataset = [ 3 , 6 , 9 , 12 , 15 ];
- 
+var dataset = [3, 6, 9, 12, 15]
+
 //选择body中的p元素
-var p = d3.select("body").selectAll("p");
- 
+var p = d3.select('body').selectAll('p')
+
 //获取update部分
-var update = p.data(dataset);
- 
+var update = p.data(dataset)
+
 //获取enter部分
-var enter = update.enter();
- 
+var enter = update.enter()
+
 //update部分的处理：更新属性值
-update.text(function(d){
-    return "update " + d;
-});
- 
+update.text(function (d) {
+  return 'update ' + d
+})
+
 //enter部分的处理：添加元素后赋予属性值
-enter.append("p")
-    .text(function(d){
-        return "enter " + d;
-    });
+enter.append('p').text(function (d) {
+  return 'enter ' + d
+})
 ```
 
 结果如下图，update 部分和 enter 部分被绑定的数据很清晰地表示了出来。
@@ -77,27 +77,27 @@ enter.append("p")
 现在 body 中有三个 p 元素，要绑定一个长度小于 3 的数组到 p 的选择集上，然后分别处理 update 和 exit 两部分。
 
 ```javascript
-var dataset = [ 3 ];
- 
+var dataset = [3]
+
 //选择body中的p元素
-var p = d3.select("body").selectAll("p");
- 
+var p = d3.select('body').selectAll('p')
+
 //获取update部分
-var update = p.data(dataset);
- 
+var update = p.data(dataset)
+
 //获取exit部分
-var exit = update.exit();
- 
+var exit = update.exit()
+
 //update部分的处理：更新属性值
-update.text(function(d){
-    return "update " + d;
-});
- 
+update.text(function (d) {
+  return 'update ' + d
+})
+
 //exit部分的处理：修改p元素的属性
-exit.text(function(d){
-        return "exit";
-    });
- 
+exit.text(function (d) {
+  return 'exit'
+})
+
 //exit部分的处理通常是删除元素
 // exit.remove();
 ```
@@ -117,4 +117,3 @@ exit.text(function(d){
 展示地址：[http://www.ourd3js.com/demo/rm/R-7.0/enter.html](http://www.ourd3js.com/demo/rm/R-7.0/enter.html)
 
 展示地址：[http://www.ourd3js.com/demo/rm/R-7.0/exit.html](http://www.ourd3js.com/demo/rm/R-7.0/exit.html)
-

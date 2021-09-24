@@ -42,13 +42,14 @@ D3 虽然没有明文规定一定要在 SVG 中绘图，但是 D3 提供了众�
 使用 D3 在 body 元素中添加 svg 的代码如下。
 
 ```javascript
-var width = 300;  //画布的宽度
-var height = 300;   //画布的高度
+var width = 300 //画布的宽度
+var height = 300 //画布的高度
 
-var svg = d3.select("body")     //选择文档中的body元素
-    .append("svg")          //添加一个svg元素
-    .attr("width", width)       //设定宽度
-    .attr("height", height);    //设定高度
+var svg = d3
+  .select('body') //选择文档中的body元素
+  .append('svg') //添加一个svg元素
+  .attr('width', width) //设定宽度
+  .attr('height', height) //设定高度
 ```
 
 有了画布，接下来就可以在画布上作图了。
@@ -78,36 +79,38 @@ var svg = d3.select("body")     //选择文档中的body元素
 现在给出一组数据，要对此进行可视化。数据如下：
 
 ```javascript
-var dataset = [ 250 , 210 , 170 , 130 , 90 ];  //数据（表示矩形的宽度）
+var dataset = [250, 210, 170, 130, 90] //数据（表示矩形的宽度）
 ```
 
 为简单起见，我们直接用数值的大小来表示矩形的像素宽度（后面会说到这不是一种好方法）。然后，添加以下代码。
 
 ```javascript
-var rectHeight = 25;   //每个矩形所占的像素高度(包括空白)
+var rectHeight = 25 //每个矩形所占的像素高度(包括空白)
 
-svg.selectAll("rect")
-    .data(dataset)
-    .enter()
-    .append("rect")
-    .attr("x",20)
-    .attr("y",function(d,i){
-         return i * rectHeight;
-    })
-    .attr("width",function(d){
-         return d;
-    })
-    .attr("height",rectHeight-2)
-    .attr("fill","steelblue");
+svg
+  .selectAll('rect')
+  .data(dataset)
+  .enter()
+  .append('rect')
+  .attr('x', 20)
+  .attr('y', function (d, i) {
+    return i * rectHeight
+  })
+  .attr('width', function (d) {
+    return d
+  })
+  .attr('height', rectHeight - 2)
+  .attr('fill', 'steelblue')
 ```
 
 这段代码添加了与 dataset 数组的长度相同数量的矩形，所使用的语句是：
 
 ```javascript
-svg.selectAll("rect")   //选择svg内所有的矩形
-    .data(dataset)  //绑定数组
-    .enter()        //指定选择集的enter部分
-    .append("rect") //添加足够数量的矩形元素
+svg
+  .selectAll('rect') //选择svg内所有的矩形
+  .data(dataset) //绑定数组
+  .enter() //指定选择集的enter部分
+  .append('rect') //添加足够数量的矩形元素
 ```
 
 这段代码以后会常常出现在 D3 的代码中，请务必牢记。目前不深入讨论它的作用机制是怎样的，只需要读者牢记，当：
@@ -131,4 +134,3 @@ svg.selectAll("rect")   //选择svg内所有的矩形
 下载地址：[rm30.zip](http://www.ourd3js.com/src/rm/rm30.zip)
 
 展示地址：[http://www.ourd3js.com/demo/rm/R-3.0/MakeChart.html](http://www.ourd3js.com/demo/rm/R-3.0/MakeChart.html)
-

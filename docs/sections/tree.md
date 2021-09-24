@@ -15,19 +15,19 @@ JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。关�
 "name":"中国",
 "children":
 [
-    { 
-      "name":"浙江" , 
+    {
+      "name":"浙江" ,
       "children":
       [
             {"name":"杭州" },
             {"name":"宁波" },
             {"name":"温州" },
             {"name":"绍兴" }
-      ] 
+      ]
     },
-    
-    { 
-        "name":"广西" , 
+
+    {
+        "name":"广西" ,
         "children":
         [
             {
@@ -43,10 +43,10 @@ JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。关�
             {"name":"南宁"},
             {"name":"柳州"},
             {"name":"防城港"}
-        ] 
+        ]
     },
-    
-    { 
+
+    {
         "name":"黑龙江",
         "children":
         [
@@ -54,11 +54,11 @@ JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。关�
             {"name":"齐齐哈尔"},
             {"name":"牡丹江"},
             {"name":"大庆"}
-        ] 
+        ]
     },
-    
-    { 
-        "name":"新疆" , 
+
+    {
+        "name":"新疆" ,
         "children":
         [
             {"name":"乌鲁木齐"},
@@ -78,9 +78,12 @@ JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。关�
 定义一个集群图布局：
 
 ```javascript
-var tree = d3.layout.tree()
-  .size([width, height-200])
-  .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2); });
+var tree = d3.layout
+  .tree()
+  .size([width, height - 200])
+  .separation(function (a, b) {
+    return a.parent == b.parent ? 1 : 2
+  })
 ```
 
 布局保存在变量 tree 中。
@@ -96,7 +99,7 @@ d3.json("city_tree.json", function(error, root) {
 
   var nodes = tree.nodes(root);
   var links = tree.links(nodes);
-  
+
   console.log(nodes);
   console.log(links);
 
@@ -107,7 +110,7 @@ d3.json() 是用来向服务器请求 JSON 文件的。
 
 要注意，d3.json() 不能读取本地文件。例如，将 html 文件与 json 文件放到本地同一目录，打开 html 文件是不能顺利读取的。需要搭建一个网络服务器来使用它，可用 Apache 搭建一个简单的服务器（参见【[搭建 Apache](http://www.ourd3js.com/wordpress/?p=413)】）。否则，浏览器（Chrome）的控制台中，会出现以下错误：
 
-**XMLHttpRequest cannot load file:///D:/*******/city.json. Cross origin requests are only supported for HTTP. **
+**XMLHttpRequest cannot load file:///D:/**\*\*\*\*\*/city.json. Cross origin requests are only supported for HTTP. \*\*
 
 经过测试，Firefox 可以直接读取本地文件，无需搭服务器，其他大多数浏览器不行。建议搭建服务器进行测试，这是正确的做法。
 
@@ -134,8 +137,9 @@ D3 已经基本上为我们准备好了绘制的函数：d3.svg.diagonal() 。�
 创建一个对角线生成器：
 
 ```javascript
-var diagonal = d3.svg.diagonal()
-    .projection(function(d) { return [d.y, d.x]; });
+var diagonal = d3.svg.diagonal().projection(function (d) {
+  return [d.y, d.x]
+})
 ```
 
 projection() 是一个点变换器，默认是 [ d.x , d.y ]，即保持原坐标不变，如果写成 [ d.y , d.x ] ，即是说对任意输入的顶点，都交换 x 和 y 坐标。
@@ -143,15 +147,16 @@ projection() 是一个点变换器，默认是 [ d.x , d.y ]，即保持原坐�
 绘制连线时，使用方法如下：
 
 ```javascript
-var link = svg.selectAll(".link")
-      .data(links)
-      .enter()
-      .append("path")
-      .attr("class", "link")
-      .attr("d", diagonal);   //使用对角线生成器
+var link = svg
+  .selectAll('.link')
+  .data(links)
+  .enter()
+  .append('path')
+  .attr('class', 'link')
+  .attr('d', diagonal) //使用对角线生成器
 ```
 
-绘制节点时，还是用 <svg> 中的 <circle> 来绘制，这里就不复述了，前面已经使用过。结果图为：
+绘制节点时，还是用 `<svg>` 中的 `<circle>` 来绘制，这里就不复述了，前面已经使用过。结果图为：
 
 ![树状图](./images/tree-3.png)
 
